@@ -43,9 +43,10 @@ a { color: inherit; }
 
 .top {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px 16px;
   padding: 22px 0 8px;
 }
 
@@ -62,6 +63,7 @@ a { color: inherit; }
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.03em;
+  white-space: nowrap;
 }
 
 .brand small {
@@ -115,9 +117,10 @@ h1, h2, h3 { font-family: var(--display); letter-spacing: -0.04em; }
 h1 {
   margin: 0;
   max-width: 16ch;
-  font-size: clamp(34px, 5vw, 58px);
-  line-height: 1.05;
+  font-size: clamp(30px, 4.6vw, 58px);
+  line-height: 1.08;
   font-weight: 700;
+  overflow-wrap: break-word;
 }
 
 .lead {
@@ -356,7 +359,7 @@ h1 {
   padding-left: 18px;
 }
 
-.lists li { margin: 4px 0; }
+.lists li { margin: 4px 0; overflow-wrap: break-word; }
 
 .alts {
   margin: 14px 0 0;
@@ -500,9 +503,7 @@ code {
 }
 
 @media (max-width: 640px) {
-  .top { align-items: flex-start; }
-  .tm-link { margin-top: 10px; }
-  h1 { max-width: none; }
+  h1 { max-width: none; font-size: 28px; }
   .actions { display: grid; }
   .button, .button.secondary { width: 100%; text-align: center; }
 }
