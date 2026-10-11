@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Куда сдать — тип отхода и способ утилизации</title>
+  <meta name="description" content="Сфотографируйте бутылку, банку, бумагу или коробку. Модель Google Teachable Machine определит материал и подскажет, куда это сдавать.">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>
+        <strong>Куда сдать</strong>
+        <small>сортировка по фото</small>
+      </span>
+    </a>
+    <a class="tm-link" href="https://teachablemachine.withgoogle.com/train/image" target="_blank" rel="noopener">Google Teachable Machine</a>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="kicker">Один предмет, ровный свет</p>
+      <h1>Сфотографируйте отход — скажем, что это и куда нести</h1>
+      <p class="lead">Модель в формате Google Teachable Machine отличает пластик, бумагу, картон, стекло, металл и то, что лучше не класть во вторсырьё. Дальше — короткая памятка по сдаче.</p>
+    </section>
+
+    <section class="workspace">
+      <div class="capture">
+        <div class="finder" id="finder">
+          <video id="video" playsinline autoplay muted hidden></video>
+          <img id="preview" alt="" hidden>
+          <div class="finder-empty" id="finder-empty">
+            <p>Положите фото сюда</p>
+            <span>или включите камеру</span>
+          </div>
+          <canvas id="frame" hidden></canvas>
+        </div>
+        <p class="file-meta" id="file-meta" hidden></p>
+        <div class="actions">
+          <button class="button" id="camera-button" type="button">Включить камеру</button>
+          <label class="button secondary">
+            Загрузить фото
+            <input id="file-input" type="file" accept="image/*" capture="environment">
+          </label>
+        </div>
+        <p class="hint">Лучше всего заходит один предмет на светлом фоне, без пакета и без кучи других вещей в кадре.</p>
+      </div>
+
+      <section class="answer" aria-live="polite">
+        <div class="answer-head">
+          <h2>Куда нести</h2>
+        </div>
+        <div id="result">
+          <div class="empty-answer">
+            <p>Здесь появится тип материала, бак и что сделать перед сдачей.</p>
+            {% if not model_ready %}
+            <p class="warn-inline">Модель не загрузилась. Нужны файлы <code>model/keras_model.keras</code> и <code>model/labels.txt</code>.</p>
+            {% endif %}
+          </div>
+        </div>
+      </section>
+    </section>
+
+    {% if samples %}
+    <section class="samples">
+      <div class="section-head">
+        <h2>Проверить на примере</h2>
+        <p>Снимки из учебного набора: один предмет на белом фоне.</p>
+      </div>
+      <div class="sample-row">
+        {% for sample in samples %}
+        <button class="sample" type="button" data-src="{{ sample.url }}" data-name="{{ sample.id }}.jpg">
+          <img src="{{ sample.url }}" alt="Пример: {{ sample.title }}">
+          <span>{{ sample.title }}</span>
+        </button>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="guide">
+      <div class="section-head">
+        <h2>Как готовить к сдаче</h2>
+        <p>Коротко по шести материалам, которые узнаёт встроенная модель. Цвет бака в вашем дворе может быть другим.</p>
+      </div>
+      <div class="guide-grid">
+        {% for card in guides %}
+        <article class="guide-card" style="--bin: {{ card.color }}">
+          <div class="swatch" aria-hidden="true"></div>
+          <h3>{{ card.title }}</h3>
+          <p class="short">{{ card.short }}</p>
+          <p>{{ card.summary }}</p>
+          <p class="bin-line"><strong>{{ card.bin_name }}.</strong> {{ card.bin_hint }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Правила приёма зависят от города и оператора. Перед выносом сверьтесь с местной памяткой: в Москве вторсырьё чаще забирает синий контейнер, в других городах материалы раскладывают по разным бакам.</p>
+    {% if metrics %}
+    <p>На отложенных фото учебного набора модель верно называет материал в {{ metrics.val_accuracy_pct }}% случаев. На бытовом снимке с несколькими предметами уверенность обычно ниже.</p>
+    {% endif %}
+    <p>Встроенная модель — MobileNetV2 на датасете TrashNet (Mindy Yang, Gary Thung, 2016). Файлы читаются так же, как Keras-экспорт Google Teachable Machine: свою модель можно положить вместо них.</p>
+  </footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>

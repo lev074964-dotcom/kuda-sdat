@@ -1,0 +1,27 @@
+{
+  "val_accuracy": 0.805940594059406,
+  "val_accuracy_pct": 81,
+  "per_class_accuracy": {
+    "cardboard": 0.8641975308641975,
+    "glass": 0.86,
+    "metal": 0.7926829268292683,
+    "paper": 0.8403361344537815,
+    "plastic": 0.7291666666666666,
+    "trash": 0.5925925925925926
+  },
+  "classes": [
+    "cardboard",
+    "glass",
+    "metal",
+    "paper",
+    "plastic",
+    "trash"
+  ],
+  "images": 2527,
+  "architecture": "MobileNetV2",
+  "input_size": 224,
+  "normalization": "(x / 127.5) - 1",
+  "format": "Teachable Machine compatible Keras model",
+  "dataset": "TrashNet (Yang, Thung, 2016)",
+  "trained_at": "2026-10-11T15:48:55.279456+00:00"
+}
