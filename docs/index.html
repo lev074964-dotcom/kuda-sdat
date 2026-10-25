@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Куда сдать — тип отхода и способ утилизации</title>
+  <meta name="description" content="Сфотографируйте бутылку, банку, бумагу или коробку. Модель определит материал и подскажет, куда это сдавать.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="./">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>
+        <strong>Куда сдать</strong>
+        <small>сортировка по фото</small>
+      </span>
+    </a>
+    <a class="tm-link" href="https://github.com/lev074964-dotcom/kuda-sdat" target="_blank" rel="noopener">Код на GitHub</a>
+  </header>
+  <main>
+    <section class="intro">
+      <p class="kicker">Один предмет, ровный свет</p>
+      <h1>Сфотографируйте отход — скажем, что это и куда нести</h1>
+      <p class="lead">Модель открывается прямо в браузере и отличает пластик, бумагу, картон, стекло, металл и то, что лучше не класть во вторсырьё.</p>
+    </section>
+    <section class="workspace">
+      <div class="capture">
+        <div class="finder" id="finder">
+          <video id="video" playsinline autoplay muted hidden></video>
+          <img id="preview" alt="" hidden>
+          <div class="finder-empty" id="finder-empty">
+            <p>Положите фото сюда</p>
+            <span>или включите камеру</span>
+          </div>
+          <canvas id="frame" hidden></canvas>
+        </div>
+        <p class="file-meta" id="file-meta" hidden></p>
+        <div class="actions">
+          <button class="button" id="camera-button" type="button">Включить камеру</button>
+          <label class="button secondary">
+            Загрузить фото
+            <input id="file-input" type="file" accept="image/*" capture="environment">
+          </label>
+        </div>
+        <p class="hint">Лучше всего заходит один предмет на светлом фоне, без пакета и без кучи других вещей в кадре. Первый запуск скачивает модель, это один раз.</p>
+      </div>
+      <section class="answer" aria-live="polite">
+        <div class="answer-head"><h2>Куда нести</h2></div>
+        <div id="result">
+          <div class="empty-answer"><p>Здесь появится тип материала, бак и что сделать перед сдачей.</p></div>
+        </div>
+      </section>
+    </section>
+    <section class="samples">
+      <div class="section-head">
+        <h2>Проверить на примере</h2>
+        <p>Снимки из учебного набора: один предмет на белом фоне.</p>
+      </div>
+      <div class="sample-row" id="samples"></div>
+    </section>
+    <section class="guide">
+      <div class="section-head">
+        <h2>Как готовить к сдаче</h2>
+        <p>Коротко по шести материалам. Цвет бака в вашем дворе может быть другим.</p>
+      </div>
+      <div class="guide-grid" id="guides"></div>
+    </section>
+  </main>
+  <footer>
+    <p>Правила приёма зависят от города и оператора. В Москве вторсырьё чаще забирает синий контейнер, в других городах материалы раскладывают по разным бакам.</p>
+    <p>На отложенных фото учебного набора модель верно называет материал в 81% случаев. Эта страница хранится в репозитории и открывается по постоянной ссылке.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
